@@ -9,22 +9,24 @@ api = Api(app)
 
 # Route for Parser Object
 class Parser(Resource):
+    def __init__(self,statusCode):
+        self.statusCode =  statusCode
+
     def get(self):
-        statusCode = 404
-        res = ""
+        res =  ""
         flag = False
         try:
             command = ["python3","scripts/parser.py"]
-            res = check_output(command,stderr=STDOUT).decode()
+            res =  check_output(command,stderr=STDOUT).decode()
             print("This is result -> "+res)
             flag = True
         except Exception as err:
-            res = str(err)
+            res =  str(err)
 
         if flag:
-            statusCode = 200
+            self.statusCode =  200
         return {
-            "statusCode":statusCode,
+            "statusCode":self.statusCode,
             "data":res
         }
 
@@ -32,28 +34,27 @@ class Parser(Resource):
         req = request.json
         flag = False
         url = req["url"]
-        statusCode = 404
-        res = ""
+        res =  ""
         command = req["command"]
         try:
             ter_command = ["python3","scripts/parser.py",url,command]
-            res = check_output(ter_command,stderr=STDOUT).decode()
+            res =  check_output(ter_command,stderr=STDOUT).decode()
             flag = True
         except Exception as err:
-            res = str(err)
+            res =  str(err)
 
         if flag:
-            statusCode = 200
+            self.statusCode =  200
 
 
         return {
             "data":res,
-            "statusCode":statusCode
+            "statusCode":self.statusCode
         }
 
 # Route for Network Identification Object
-
-api.add_resource(Parser,"/parser")
+parser = Parser(404)
+api.add_resource(Parser,"/parser",resource_class_kwargs={'statusCode': parser})
 if __name__ == "__main__":
     app.run(debug=True)
 

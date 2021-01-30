@@ -15,7 +15,7 @@ git clone https://github.com/x3rxe5/Mini-OSINT-Web-App.git
 
 #### install dependencies using pip
 ```
-pip install -r requirements.txt
+pip3 install -r requirements.txt
 ```
 
 

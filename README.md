@@ -1,4 +1,4 @@
-# Mini Hacking tools
+# Mini Osint WEB App
 ### Tools that you can integrate into your Web application
 
 
